@@ -1,0 +1,970 @@
+extension String {
+    func stripHTML() -> String {
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+    }
+}
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18EDBCF92EB950E900B679DA /* GRead.app in Sources */ = {isa = PBXBuildFile; fileRef = 18EDBC372EB9348F00B679DA /* GRead.app */; };
+		18EDBD132EB950E900B679DA /* GReadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EDBC692EB936BC00B679DA /* GReadApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		18EDBC372EB9348F00B679DA /* GRead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GRead.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18EDBC692EB936BC00B679DA /* GReadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GReadApp.swift; sourceTree = "<group>"; };
+		18EDBC732EB9387600B679DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		18EDBD152EB950EA00B679DA /* Exceptions for "Extensions" folder in "GRead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"String+Extensions.swift",
+			);
+			target = 18EDBC362EB9348F00B679DA /* GRead */;
+		};
+		18EDBD162EB950EA00B679DA /* Exceptions for "Models" folder in "GRead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Book.swift,
+				UserBook.swift,
+				UserStats.swift,
+			);
+			target = 18EDBC362EB9348F00B679DA /* GRead */;
+		};
+		18EDBD172EB950EA00B679DA /* Exceptions for "Services" folder in "GRead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				APIConfig.swift,
+				APIService.swift,
+				AuthenticationManager.swift,
+			);
+			target = 18EDBC362EB9348F00B679DA /* GRead */;
+		};
+		18EDBD182EB950EA00B679DA /* Exceptions for "ViewModels" folder in "GRead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				BookDetailViewModel.swift,
+				BookDirectoryViewModel.swift,
+				MyBookDetailViewModel.swift,
+				MyLibraryViewModel.swift,
+				ProfileViewModel.swift,
+				SearchViewModel.swift,
+			);
+			target = 18EDBC362EB9348F00B679DA /* GRead */;
+		};
+		18EDBD192EB950EA00B679DA /* Exceptions for "Views" folder in "GRead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Auth/LoginView.swift,
+				Books/BookDetailView.swift,
+				Books/BookDirectoryView.swift,
+				Books/BookRowView.swift,
+				ContentView.swift,
+				Library/MyBookDetailView.swift,
+				Library/MyBookRowView.swift,
+				Library/MyLibraryView.swift,
+				MainTabView.swift,
+				Profile/ProfileView.swift,
+				Profile/StatRowView.swift,
+				Search/SearchView.swift,
+			);
+			target = 18EDBC362EB9348F00B679DA /* GRead */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		18EDBC6D2EB9378100B679DA /* GRead */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GRead;
+			sourceTree = "<group>";
+		};
+		18EDBCB82EB950C600B679DA /* Extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18EDBD152EB950EA00B679DA /* Exceptions for "Extensions" folder in "GRead" target */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		18EDBCBC2EB950C600B679DA /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18EDBD162EB950EA00B679DA /* Exceptions for "Models" folder in "GRead" target */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		18EDBCC02EB950C600B679DA /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18EDBD172EB950EA00B679DA /* Exceptions for "Services" folder in "GRead" target */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		18EDBCC72EB950C600B679DA /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18EDBD182EB950EA00B679DA /* Exceptions for "ViewModels" folder in "GRead" target */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		18EDBCD92EB950C600B679DA /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18EDBD192EB950EA00B679DA /* Exceptions for "Views" folder in "GRead" target */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18EDBC342EB9348F00B679DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18EDBC2E2EB9348F00B679DA = {
+			isa = PBXGroup;
+			children = (
+				18EDBC6D2EB9378100B679DA /* GRead */,
+				18EDBC382EB9348F00B679DA /* Products */,
+				18EDBCB82EB950C600B679DA /* Extensions */,
+				18EDBCBC2EB950C600B679DA /* Models */,
+				18EDBCC02EB950C600B679DA /* Services */,
+				18EDBCC72EB950C600B679DA /* ViewModels */,
+				18EDBCD92EB950C600B679DA /* Views */,
+				18EDBC692EB936BC00B679DA /* GReadApp.swift */,
+				18EDBC732EB9387600B679DA /* Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		18EDBC382EB9348F00B679DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18EDBC372EB9348F00B679DA /* GRead.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18EDBC362EB9348F00B679DA /* GRead */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18EDBC422EB9349200B679DA /* Build configuration list for PBXNativeTarget "GRead" */;
+			buildPhases = (
+				18EDBC342EB9348F00B679DA /* Frameworks */,
+				18EDBC352EB9348F00B679DA /* Resources */,
+				18EDBCF82EB950DA00B679DA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GRead;
+			packageProductDependencies = (
+			);
+			productName = GRead;
+			productReference = 18EDBC372EB9348F00B679DA /* GRead.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18EDBC2F2EB9348F00B679DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					18EDBC362EB9348F00B679DA = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 18EDBC322EB9348F00B679DA /* Build configuration list for PBXProject "GRead" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 18EDBC2E2EB9348F00B679DA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 18EDBC382EB9348F00B679DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18EDBC362EB9348F00B679DA /* GRead */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18EDBC352EB9348F00B679DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18EDBCF82EB950DA00B679DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18EDBCF92EB950E900B679DA /* GRead.app in Sources */,
+				18EDBD132EB950E900B679DA /* GReadApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18EDBC402EB9349200B679DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Z463F93SW9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GRead/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		18EDBC412EB9349200B679DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Z463F93SW9;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GRead/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18EDBC432EB9349200B679DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z463F93SW9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GRead;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.gread.GRead;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18EDBC442EB9349200B679DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z463F93SW9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GRead;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fun.gread.GRead;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18EDBC322EB9348F00B679DA /* Build configuration list for PBXProject "GRead" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18EDBC402EB9349200B679DA /* Debug */,
+				18EDBC412EB9349200B679DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18EDBC422EB9349200B679DA /* Build configuration list for PBXNativeTarget "GRead" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18EDBC432EB9349200B679DA /* Debug */,
+				18EDBC442EB9349200B679DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18EDBC2F2EB9348F00B679DA /* Project object */;
+}
+struct Book: Identifiable, Codable {
+    let id: Int
+    let title: String
+    let author: String?
+    let isbn: String?
+    let pageCount: Int?
+    let content: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case content
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Decode ID
+        id = try container.decode(Int.self, forKey: .id)
+        
+        // Decode title (WordPress returns rendered object)
+        if let titleObj = try? container.decode([String: String].self, forKey: .title) {
+            title = titleObj["rendered"] ?? ""
+        } else {
+            title = try container.decode(String.self, forKey: .title)
+        }
+        
+        // Decode content
+        if let contentObj = try? container.decode([String: String].self, forKey: .content) {
+            content = contentObj["rendered"]
+        } else {
+            content = nil
+        }
+        
+        // These will come from meta fields in real API
+        author = nil
+        isbn = nil
+        pageCount = nil
+    }
+    
+    init(id: Int, title: String, author: String?, isbn: String?, pageCount: Int?, content: String?) {
+        self.id = id
+        self.title = title
+        self.author = author
+        self.isbn = isbn
+        self.pageCount = pageCount
+        self.content = content
+    }
+}
+struct UserBook: Identifiable {
+    let id: Int
+    let book: Book
+    let currentPage: Int
+    let status: String
+    
+    var progressPercentage: Int {
+        guard let totalPages = book.pageCount, totalPages > 0 else { return 0 }
+        return min(100, (currentPage * 100) / totalPages)
+    }
+    
+    var isCompleted: Bool {
+        guard let totalPages = book.pageCount, totalPages > 0 else { return false }
+        return currentPage >= totalPages
+    }
+}
+struct UserStats: Codable {
+    let displayName: String
+    let points: Int
+    let booksCompleted: Int
+    let pagesRead: Int
+    let booksAdded: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case displayName = "display_name"
+        case points
+        case booksCompleted = "books_completed"
+        case pagesRead = "pages_read"
+        case booksAdded = "books_added"
+    }
+}
+import Foundation
+import Combine
+
+// MARK: - Configuration
+struct APIConfig {
+    // Replace with your actual site URL
+    static let baseURL = "https://gread.fun"
+    static let wpAPI = "\(baseURL)/wp-json/wp/v2"
+    static let customAPI = "\(baseURL)/wp-json/gread/v1"
+}
+class APIService {
+    static let shared = APIService()
+    
+    private init() {}
+    
+    func fetchBooks() async throws -> [Book] {
+        let url = URL(string: "\(APIConfig.wpAPI)/book?per_page=100")!
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let books = try JSONDecoder().decode([Book].self, from: data)
+        
+        return books
+    }
+    
+    func searchBooks(query: String) async throws -> [Book] {
+        var components = URLComponents(string: "\(APIConfig.wpAPI)/book")!
+        components.queryItems = [
+            URLQueryItem(name: "search", value: query),
+            URLQueryItem(name: "per_page", value: "20")
+        ]
+        
+        guard let url = components.url else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
+        }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let books = try JSONDecoder().decode([Book].self, from: data)
+        
+        return books
+    }
+    
+    func addBookToLibrary(bookId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/library/add")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["book_id": bookId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to add book"])
+        }
+    }
+    
+    func fetchUserBooks(token: String) async throws -> [UserBook] {
+        let url = URL(string: "\(APIConfig.customAPI)/library")!
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        // Parse response - adjust based on your actual API response
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
+            return []
+        }
+        
+        return json.compactMap { item in
+            guard let bookId = item["book_id"] as? Int,
+                  let currentPage = item["current_page"] as? Int,
+                  let status = item["status"] as? String,
+                  let bookData = item["book"] as? [String: Any],
+                  let title = bookData["title"] as? String else {
+                return nil
+            }
+            
+            let book = Book(
+                id: bookId,
+                title: title,
+                author: bookData["author"] as? String,
+                isbn: bookData["isbn"] as? String,
+                pageCount: bookData["page_count"] as? Int,
+                content: bookData["content"] as? String
+            )
+            
+            return UserBook(
+                id: item["id"] as? Int ?? bookId,
+                book: book,
+                currentPage: currentPage,
+                status: status
+            )
+        }
+    }
+    
+    func updateProgress(bookId: Int, currentPage: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/library/progress")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = [
+            "book_id": bookId,
+            "current_page": currentPage
+        ]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to update progress"])
+        }
+    }
+    
+    func fetchUserStats(userId: Int, token: String) async throws -> UserStats {
+        let url = URL(string: "\(APIConfig.customAPI)/user/\(userId)/stats")!
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let stats = try JSONDecoder().decode(UserStats.self, from: data)
+        
+        return stats
+    }
+}
+@MainActor
+class AuthenticationManager: ObservableObject {
+    @Published var isAuthenticated = false
+    @Published var authToken: String?
+    @Published var userId: Int?
+    
+    private let userDefaults = UserDefaults.standard
+    private let tokenKey = "auth_token"
+    private let userIdKey = "user_id"
+    
+    init() {
+        loadSavedAuth()
+    }
+    
+    private func loadSavedAuth() {
+        if let token = userDefaults.string(forKey: tokenKey),
+           let userId = userDefaults.object(forKey: userIdKey) as? Int {
+            self.authToken = token
+            self.userId = userId
+            self.isAuthenticated = true
+        }
+    }
+    
+    func login(username: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        // Using WordPress JWT Authentication plugin
+        let url = URL(string: "\(APIConfig.baseURL)/wp-json/jwt-auth/v1/token")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: String] = [
+            "username": username,
+            "password": password
+        ]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                    return
+                }
+                
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       let token = json["token"] as? String,
+                       let userId = json["user_id"] as? Int {
+                        
+                        self?.authToken = token
+                        self?.userId = userId
+                        self?.isAuthenticated = true
+                        
+                        self?.userDefaults.set(token, forKey: self?.tokenKey ?? "")
+                        self?.userDefaults.set(userId, forKey: self?.userIdKey ?? "")
+                        
+                        completion(.success(()))
+                    } else {
+                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])))
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }.resume()
+    }
+    
+    func logout() {
+        authToken = nil
+        userId = nil
+        isAuthenticated = false
+        userDefaults.removeObject(forKey: tokenKey)
+        userDefaults.removeObject(forKey: userIdKey)
+    }
+}
+
+@MainActor
+class BookDetailViewModel: ObservableObject {
+    @Published var isInLibrary = false
+    @Published var isLoading = false
+    @Published var showError = false
+    @Published var errorMessage: String?
+    
+    let book: Book
+    
+    init(book: Book) {
+        self.book = book
+    }
+    
+    func addToLibrary() async {
+        guard let token = UserDefaults.standard.string(forKey: "auth_token") else {
+            errorMessage = "Not authenticated"
+            showError = true
+            return
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await APIService.shared.addBookToLibrary(bookId: book.id, token: token)
+            isInLibrary = true
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+    }
+}
+@MainActor
+class BookDirectoryViewModel: ObservableObject {
+    @Published var books: [Book] = []
+    @Published var isLoading = false
+    
+    func loadBooks() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            books = try await APIService.shared.fetchBooks()
+        } catch {
+            print("Error loading books: \(error)")
+        }
+    }
+}
+@MainActor
+class MyBookDetailViewModel: ObservableObject {
+    @Published var userBook: UserBook
+    @Published var isLoading = false
+    @Published var showSuccess = false
+    @Published var showError = false
+    @Published var errorMessage: String?
+    
+    init(userBook: UserBook) {
+        self.userBook = userBook
+    }
+    
+    func updateProgress(currentPage: Int) async {
+        guard let token = UserDefaults.standard.string(forKey: "auth_token"),
+              let totalPages = userBook.book.pageCount else { return }
+        
+        let validPage = min(max(0, currentPage), totalPages)
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await APIService.shared.updateProgress(
+                bookId: userBook.book.id,
+                currentPage: validPage,
+                token: token
+            )
+            
+            // Update local state
+            userBook = UserBook(
+                id: userBook.id,
+                book: userBook.book,
+                currentPage: validPage,
+                status: userBook.status
+            )
+            
+            showSuccess = true
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+    }
+}
+@MainActor
+class MyLibraryViewModel: ObservableObject {
+    @Published var userBooks: [UserBook] = []
+    @Published var isLoading = false
+    
+    func loadUserBooks() async {
+        guard let token = UserDefaults.standard.string(forKey: "auth_token") else { return }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            userBooks = try await APIService.shared.fetchUserBooks(token: token)
+        } catch {
+            print("Error loading user books: \(error)")
+        }
+    }
+    
+    func removeBooks(at offsets: IndexSet) {
+        // Implement delete functionality
+        userBooks.remove(atOffsets: offsets)
+    }
+}
+@MainActor
+class ProfileViewModel: ObservableObject {
+    @Published var userStats: UserStats?
+    @Published var isLoading = false
+    
+    func loadUserStats() async {
+        guard let token = UserDefaults.standard.string(forKey: "auth_token"),
+              let userId = UserDefaults.standard.object(forKey: "user_id") as? Int else {
+            return
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            userStats = try await APIService.shared.fetchUserStats(userId: userId, token: token)
+        } catch {
+            print("Error loading stats: \(error)")
+        }
+    }
+}
+@MainActor
+class SearchViewModel: ObservableObject {
+    @Published var searchResults: [Book] = []
+    @Published var isSearching = false
+    
+    private var searchTask: Task<Void, Never>?
+    
+    func search(query: String) async {
+        // Cancel previous search
+        searchTask?.cancel()
+        
+        guard query.count >= 3 else {
+            searchResults = []
+            return
+        }
+        
+        searchTask = Task {
+            isSearching = true
+            defer { isSearching = false }
+            
+            // Debounce
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            
+            guard !Task.isCancelled else { return }
+            
+            do {
+                searchResults = try await APIService.shared.searchBooks(query: query)
+            } catch {
+                print("Search error: \(error)")
+                searchResults = []
+            }
+        }
+        
+        await searchTask?.value
+    }
+}
+struct ContentView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
+    
+    var body: some View {
+        Group {
+            if authManager.isAuthenticated {
+                MainTabView()
+            } else {
+                LoginView()
+            }
+        }
+    }
+}
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            BookDirectoryView()
+                .tabItem {
+                    Label("Browse", systemImage: "books.vertical")
+                }
+            
+            MyLibraryView()
+                .tabItem {
+                    Label("My Library", systemImage: "book")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+            
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person.circle")
+                }
+        }
+    }
+}
