@@ -29,19 +29,20 @@ struct ReportContentView: View {
                 
                 TextField("Brief Reason", text: $reason)
                 
-                TextEditor(text: $description)
-                    .frame(minHeight: 120)
-                    .overlay(
-                        Group {
-                            if description.isEmpty {
-                                Text("Please provide details about the issue...")
-                                    .foregroundColor(.gray)
-                                    .padding(.top, 8)
-                                    .padding(.leading, 4)
-                            }
-                        },
-                        alignment: .topLeading
-                    )
+                // --- FIX: Replaced .overlay with a ZStack for placeholder ---
+                ZStack(alignment: .topLeading) {
+                    TextEditor(text: $description)
+                        .frame(minHeight: 120)
+
+                    if description.isEmpty {
+                        Text("Please provide details about the issue...")
+                            .foregroundColor(Color(UIColor.placeholderText)) // Use standard placeholder color
+                            .padding(.top, 8)
+                            .padding(.leading, 5) // Standard padding for TextEditor
+                            .allowsHitTesting(false) // Make placeholder non-interactive
+                    }
+                }
+                // --- END FIX ---
             }
             
             Section("Your Contact (Optional)") {

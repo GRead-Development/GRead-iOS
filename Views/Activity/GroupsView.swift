@@ -4,7 +4,7 @@ struct GroupsView: View {
     @StateObject private var viewModel = GroupsViewModel()
     
     var body: some View {
-        Group {
+        SwiftUI.Group {
             if viewModel.isLoading && viewModel.groups.isEmpty {
                 ProgressView("Loading groups...")
             } else if viewModel.groups.isEmpty {

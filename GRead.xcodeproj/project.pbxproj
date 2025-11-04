@@ -119,6 +119,7 @@
 				Activity/ActivityRowView.swift,
 				Activity/GroupRowView.swift,
 				Activity/GroupsView.swift,
+				Activity/NewPostView.swift,
 				Auth/LoginView.swift,
 				Books/BookDetailView.swift,
 				Books/BookDirectoryView.swift,

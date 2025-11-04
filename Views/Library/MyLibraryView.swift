@@ -54,10 +54,35 @@ struct MyLibraryView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                if viewModel.isLoading && viewModel.userBooks.isEmpty {
+                // --- MODIFICATION: Show error message if one exists ---
+                if viewModel.showError, let errorMessage = viewModel.errorMessage {
+                    VStack(spacing: 12) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.red)
+                        Text("Error Loading Library")
+                            .font(.headline)
+                        Text(errorMessage)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
+                            .padding(.horizontal)
+                        Button("Try Again") {
+                            Task {
+                                await viewModel.loadUserBooks()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.top)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if viewModel.isLoading && viewModel.userBooks.isEmpty {
                     ProgressView("Loading library...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if viewModel.userBooks.isEmpty {
                     emptyLibraryView
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     filterBar
                     
@@ -65,6 +90,7 @@ struct MyLibraryView: View {
                         Text("No books match your filters")
                             .foregroundColor(.gray)
                             .padding()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
                         List {
                             ForEach(filteredAndSortedBooks) { userBook in
@@ -106,15 +132,14 @@ struct MyLibraryView: View {
                 }
             }
             .onAppear {
-                Task {
-                    await viewModel.loadUserBooks()
+                // Only load if not already loading and library is empty
+                if !viewModel.isLoading && viewModel.userBooks.isEmpty {
+                    Task {
+                        await viewModel.loadUserBooks()
+                    }
                 }
             }
-            .alert("Error", isPresented: $viewModel.showError) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text(viewModel.errorMessage ?? "An error occurred")
-            }
+            // Removed the .alert modifier as errors are now handled inline
         }
     }
     
@@ -153,6 +178,8 @@ struct MyLibraryView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
+            // This NavigationLink will work correctly as long as MyLibraryView
+            // is hosted within the MainTabView.
             NavigationLink(destination: BookDirectoryView()) {
                 Text("Browse Books")
                     .fontWeight(.semibold)
@@ -165,3 +192,4 @@ struct MyLibraryView: View {
         .padding()
     }
 }
+

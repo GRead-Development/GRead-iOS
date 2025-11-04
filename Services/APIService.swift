@@ -1,4 +1,5 @@
 import Foundation
+
 class APIService {
     static let shared = APIService()
     
@@ -137,9 +138,73 @@ class APIService {
         
         return stats
     }
-}
-
-extension APIService {
+    
+    // MARK: - Added Functions
+    
+    /**
+     * FIX: Added missing function to fetch the activity feed.
+     */
+    func fetchActivityFeed(page: Int, token: String) async throws -> [ActivityItem] {
+        var components = URLComponents(string: "\(APIConfig.customAPI)/activity")!
+        components.queryItems = [
+            URLQueryItem(name: "page", value: "\(page)"),
+            URLQueryItem(name: "per_page", value: "20")
+        ]
+        
+        guard let url = components.url else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL for activity feed"])
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let decoder = JSONDecoder()
+        let activities = try decoder.decode([ActivityItem].self, from: data)
+        
+        return activities
+    }
+    
+    /**
+     * NEW: Added function to post a new activity update.
+     */
+    func postActivityUpdate(content: String, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/activity/post")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: String] = ["content": content]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to post update"])
+        }
+    }
+    
+    /**
+     * FIX: Added missing function to fetch groups.
+     */
+    func fetchGroups(token: String) async throws -> [Group] {
+        let url = URL(string: "\(APIConfig.customAPI)/groups")!
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let decoder = JSONDecoder()
+        let groups = try decoder.decode([Group].self, from: data)
+        
+        return groups
+    }
+    
     func removeBookFromLibrary(bookId: Int, token: String) async throws {
         let url = URL(string: "\(APIConfig.customAPI)/library/remove")!
         var request = URLRequest(url: url)
@@ -161,21 +226,7 @@ extension APIService {
     func fetchLeaderboard(type: String, limit: Int = 15) async throws -> [LeaderboardEntry] {
         // This would connect to your WordPress leaderboard endpoints
         // For now, returning empty array - implement based on your API
+        // NOTE: You will need to build the API endpoint for this in rest.php
         return []
-    }
-}
-
-
-struct Group: Identifiable, Codable {
-    let id: Int
-    let name: String
-    let description: String
-    let memberCount: Int?
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case description
-        case memberCount = "total_member_count"
     }
 }

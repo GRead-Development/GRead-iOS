@@ -7,7 +7,7 @@ struct BookDirectoryView: View {
         NavigationView {
             // --- WRAP LIST IN VSTACK TO SHOW LOADING INDICATOR ---
             VStack {
-                Group {
+                SwiftUI.Group {
                     if viewModel.isLoading && viewModel.books.isEmpty {
                         ProgressView("Loading books...")
                     } else if viewModel.books.isEmpty {
