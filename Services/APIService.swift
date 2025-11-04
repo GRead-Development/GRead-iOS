@@ -138,3 +138,44 @@ class APIService {
         return stats
     }
 }
+
+extension APIService {
+    func removeBookFromLibrary(bookId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/library/remove")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["book_id": bookId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to remove book"])
+        }
+    }
+    
+    func fetchLeaderboard(type: String, limit: Int = 15) async throws -> [LeaderboardEntry] {
+        // This would connect to your WordPress leaderboard endpoints
+        // For now, returning empty array - implement based on your API
+        return []
+    }
+}
+
+
+struct Group: Identifiable, Codable {
+    let id: Int
+    let name: String
+    let description: String
+    let memberCount: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case description
+        case memberCount = "total_member_count"
+    }
+}
