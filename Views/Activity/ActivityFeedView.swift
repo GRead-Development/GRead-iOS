@@ -6,6 +6,22 @@ struct ActivityFeedView: View {
     @State private var showNewPostSheet = false
     @State private var showLoginPrompt = false
     
+    // Load blocked/muted users
+    private var blockedUsers: [Int] {
+        UserDefaults.standard.array(forKey: "blockedUsers") as? [Int] ?? []
+    }
+    
+    private var mutedUsers: [Int] {
+        UserDefaults.standard.array(forKey: "mutedUsers") as? [Int] ?? []
+    }
+    
+    // Filter out blocked and muted users
+    private var filteredActivities: [ActivityItem] {
+        viewModel.activities.filter { activity in
+            !blockedUsers.contains(activity.userId) && !mutedUsers.contains(activity.userId)
+        }
+    }
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -18,14 +34,18 @@ struct ActivityFeedView: View {
                 if viewModel.isLoading && viewModel.activities.isEmpty {
                     ProgressView("Loading activity...")
                         .padding()
-                } else if viewModel.activities.isEmpty {
+                } else if filteredActivities.isEmpty {
                     emptyActivityView
                 } else {
                     List {
-                        ForEach(viewModel.activities) { activity in
+                        ForEach(filteredActivities) { activity in
                             ActivityRowView(activity: activity)
                                 .onAppear {
-                                    if activity.id == viewModel.activities.last?.id {
+                                    // Only trigger load more when we reach the 3rd-to-last item
+                                    // and we're not already loading
+                                    if let index = filteredActivities.firstIndex(where: { $0.id == activity.id }),
+                                       index >= filteredActivities.count - 3,
+                                       !viewModel.isLoading {
                                         Task {
                                             await viewModel.loadMoreActivity()
                                         }

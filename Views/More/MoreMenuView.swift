@@ -40,6 +40,13 @@ struct MoreMenuView: View {
                         Label("Terms of Service", systemImage: "doc.text.fill")
                     }
                 }
+                
+                Section("Settings")
+                {
+                    NavigationLink(destination: BlockedUsersView()) {
+                        Label("Blocked & Muted Users", systemImage: "person.crop.circle.badge.xmark")
+                    }
+                }
             }
             .navigationTitle("More")
         }

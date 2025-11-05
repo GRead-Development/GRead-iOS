@@ -28,6 +28,16 @@ struct ActivityRowView: View {
                     
                     if authManager.isAuthenticated && activity.userId != authManager.userId {
                         Menu {
+                            Button(action: { muteUser() }) {
+                                Label("Mute User", systemImage: "speaker.slash")
+                            }
+                            
+                            Button(action: { blockUser() }) {
+                                Label("Block User", systemImage: "person.crop.circle.badge.xmark")
+                            }
+                            
+                            Divider()
+                            
                             Button(role: .destructive, action: { showReportSheet = true }) {
                                 Label("Report User", systemImage: "exclamationmark.triangle")
                             }
@@ -68,4 +78,23 @@ struct ActivityRowView: View {
         }
         .font(.caption)
     }
+    
+    private func muteUser() {
+        var mutedUsers = UserDefaults.standard.array(forKey: "mutedUsers") as? [Int] ?? []
+        if !mutedUsers.contains(activity.userId) {
+            mutedUsers.append(activity.userId)
+            UserDefaults.standard.set(mutedUsers, forKey: "mutedUsers")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    private func blockUser() {
+        var blockedUsers = UserDefaults.standard.array(forKey: "blockedUsers") as? [Int] ?? []
+        if !blockedUsers.contains(activity.userId) {
+            blockedUsers.append(activity.userId)
+            UserDefaults.standard.set(blockedUsers, forKey: "blockedUsers")
+            UserDefaults.standard.synchronize()
+        }
+    }
 }
+
