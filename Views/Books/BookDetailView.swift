@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct BookDetailView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     let book: Book
     @StateObject private var viewModel: BookDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var showReportSheet = false
+    @State private var showLoginPrompt = false
     
     init(book: Book) {
         self.book = book
@@ -14,7 +16,6 @@ struct BookDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Book info section
                 VStack(alignment: .leading, spacing: 12) {
                     Text(book.title)
                         .font(.title)
@@ -48,10 +49,13 @@ struct BookDetailView: View {
                 .padding(.horizontal)
                 .padding(.top)
                 
-                // Action button
                 Button(action: {
-                    Task {
-                        await viewModel.addToLibrary()
+                    if authManager.isAuthenticated {
+                        Task {
+                            await viewModel.addToLibrary()
+                        }
+                    } else {
+                        showLoginPrompt = true
                     }
                 }) {
                     HStack {
@@ -68,7 +72,6 @@ struct BookDetailView: View {
                 .disabled(viewModel.isInLibrary || viewModel.isLoading)
                 .padding(.horizontal)
                 
-                // Description
                 if let content = book.content, !content.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Description")
@@ -97,6 +100,11 @@ struct BookDetailView: View {
             NavigationView {
                 ReportBookView(book: book)
             }
+        }
+        .alert("Login Required", isPresented: $showLoginPrompt) {
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please log in to add books to your library.")
         }
         .alert("Success", isPresented: $viewModel.showSuccess) {
             Button("OK", role: .cancel) {}

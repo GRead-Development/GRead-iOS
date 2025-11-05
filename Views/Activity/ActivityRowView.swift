@@ -1,6 +1,9 @@
 import SwiftUI
+
 struct ActivityRowView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     let activity: ActivityItem
+    @State private var showReportSheet = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -20,7 +23,20 @@ struct ActivityRowView: View {
                 
                 Spacer()
                 
-                activityTypeIcon
+                HStack(spacing: 12) {
+                    activityTypeIcon
+                    
+                    if authManager.isAuthenticated && activity.userId != authManager.userId {
+                        Menu {
+                            Button(role: .destructive, action: { showReportSheet = true }) {
+                                Label("Report User", systemImage: "exclamationmark.triangle")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
             }
             
             Text(activity.formattedContent)
@@ -28,6 +44,9 @@ struct ActivityRowView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.vertical, 8)
+        .sheet(isPresented: $showReportSheet) {
+            ReportUserView(userId: activity.userId, userName: activity.userName ?? "User")
+        }
     }
     
     private var activityTypeIcon: some View {

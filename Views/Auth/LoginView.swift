@@ -1,88 +1,80 @@
 import SwiftUI
-import AuthenticationServices // Import for Sign in with Apple
 
 struct LoginView: View {
     @EnvironmentObject var authManager: AuthenticationManager
+    @Environment(\.dismiss) private var dismiss
     @State private var username = ""
     @State private var password = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Image(systemName: "books.vertical.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(.blue)
+        VStack(spacing: 20) {
+            Spacer()
+            
+            Image(systemName: "books.vertical.fill")
+                .font(.system(size: 80))
+                .foregroundColor(.blue)
+            
+            Text("GRead")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            
+            Text("Sign in to your account")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            VStack(spacing: 15) {
+                TextField("Username or Email", text: $username)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textContentType(.username)
                 
-                Text("GRead")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                VStack(spacing: 15) {
-                    TextField("Username", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-                .padding(.horizontal)
-                
-                if let error = errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
-                
-                Button(action: login) {
-                    if isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    } else {
-                        Text("Login")
-                            .fontWeight(.semibold)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .disabled(isLoading || username.isEmpty || password.isEmpty)
-                
-                // --- NEW: SIGN IN WITH APPLE BUTTON ---
-                SignInWithAppleButton(
-                    .signIn, // Use .signIn or .continue based on your preference
-                    onRequest: { request in
-                        request.requestedScopes = [.fullName, .email]
-                    },
-                    onCompletion: { result in
-                        authManager.handleAppleSignIn(result: result)
-                    }
-                )
-                .signInWithAppleButtonStyle(.black) // .white, .whiteOutline
-                .frame(height: 50)
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .padding(.top, 8)
-
-                // --- NEW: NAVIGATION LINK TO REGISTER VIEW ---
-                NavigationLink(destination: RegisterView().environmentObject(authManager)) {
-                    Text("Don't have an account? Register")
-                        .font(.subheadline)
-                }
-                .padding()
-                
-                Spacer()
+                SecureField("Password", text: $password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textContentType(.password)
             }
-            .padding(.top, 50)
-            .navigationBarHidden(true)
+            .padding(.horizontal, 40)
+            .padding(.top, 20)
+            
+            if let error = errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
+            
+            Button(action: login) {
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                } else {
+                    Text("Sign In")
+                        .fontWeight(.semibold)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .padding(.horizontal, 40)
+            .padding(.top, 10)
+            .disabled(isLoading || username.isEmpty || password.isEmpty)
+            
+            Spacer()
+            Spacer()
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func login() {
@@ -94,8 +86,7 @@ struct LoginView: View {
             
             switch result {
             case .success:
-                // AuthenticationManager will update state
-                break
+                dismiss()
             case .failure(let error):
                 errorMessage = error.localizedDescription
             }

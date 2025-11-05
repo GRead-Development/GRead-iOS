@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct MyLibraryView: View {
+    @EnvironmentObject var authManager: AuthenticationManager
     @StateObject private var viewModel = MyLibraryViewModel()
     @State private var sortOption: LibrarySortOption = .title
     @State private var showCompleted = true
     @State private var showReading = true
     @State private var searchText = ""
+    @State private var showLoginSheet = false
     
     enum LibrarySortOption: String, CaseIterable {
         case title = "Title"
@@ -53,93 +55,133 @@ struct MyLibraryView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                // --- MODIFICATION: Show error message if one exists ---
-                if viewModel.showError, let errorMessage = viewModel.errorMessage {
-                    VStack(spacing: 12) {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.red)
-                        Text("Error Loading Library")
-                            .font(.headline)
-                        Text(errorMessage)
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal)
-                        Button("Try Again") {
-                            Task {
-                                await viewModel.loadUserBooks()
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.top)
-                    }
+            if !authManager.isAuthenticated {
+                guestLibraryView
+            } else {
+                authenticatedLibraryView
+            }
+        }
+    }
+    
+    private var guestLibraryView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "books.vertical")
+                .font(.system(size: 60))
+                .foregroundColor(.gray)
+            Text("My Library")
+                .font(.title2)
+                .fontWeight(.bold)
+            Text("Log in to track your reading progress and build your personal library.")
+                .font(.body)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+            
+            Button(action: {
+                showLoginSheet = true
+            }) {
+                Text("Log In")
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity)
                     .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if viewModel.isLoading && viewModel.userBooks.isEmpty {
-                    ProgressView("Loading library...")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if viewModel.userBooks.isEmpty {
-                    emptyLibraryView
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    filterBar
-                    
-                    if filteredAndSortedBooks.isEmpty {
-                        Text("No books match your filters")
-                            .foregroundColor(.gray)
-                            .padding()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else {
-                        List {
-                            ForEach(filteredAndSortedBooks) { userBook in
-                                NavigationLink(destination: MyBookDetailView(userBook: userBook)) {
-                                    MyBookRowView(userBook: userBook)
-                                }
-                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                    Button(role: .destructive) {
-                                        Task {
-                                            await viewModel.removeBook(userBook)
-                                        }
-                                    } label: {
-                                        Label("Remove", systemImage: "trash")
-                                    }
-                                }
-                            }
-                        }
-                        .listStyle(.plain)
-                        .refreshable {
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal, 40)
+            .padding(.top, 20)
+        }
+        .navigationTitle("My Library")
+        .sheet(isPresented: $showLoginSheet) {
+            LoginView()
+                .environmentObject(authManager)
+        }
+    }
+    
+    private var authenticatedLibraryView: some View {
+        VStack(spacing: 0) {
+            if viewModel.showError, let errorMessage = viewModel.errorMessage {
+                VStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 40))
+                        .foregroundColor(.red)
+                    Text("Error Loading Library")
+                        .font(.headline)
+                    Text(errorMessage)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                    Button("Try Again") {
+                        Task {
                             await viewModel.loadUserBooks()
                         }
                     }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top)
                 }
-            }
-            .navigationTitle("My Library")
-            .searchable(text: $searchText, prompt: "Search your library")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Picker("Sort By", selection: $sortOption) {
-                            ForEach(LibrarySortOption.allCases, id: \.self) { option in
-                                Label(option.rawValue, systemImage: option.icon)
-                                    .tag(option)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if viewModel.isLoading && viewModel.userBooks.isEmpty {
+                ProgressView("Loading library...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if viewModel.userBooks.isEmpty {
+                emptyLibraryView
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                filterBar
+                
+                if filteredAndSortedBooks.isEmpty {
+                    Text("No books match your filters")
+                        .foregroundColor(.gray)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List {
+                        ForEach(filteredAndSortedBooks) { userBook in
+                            NavigationLink(destination: MyBookDetailView(userBook: userBook)) {
+                                MyBookRowView(userBook: userBook)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    Task {
+                                        await viewModel.removeBook(userBook)
+                                    }
+                                } label: {
+                                    Label("Remove", systemImage: "trash")
+                                }
                             }
                         }
-                    } label: {
-                        Image(systemName: "arrow.up.arrow.down.circle")
                     }
-                }
-            }
-            .onAppear {
-                // Only load if not already loading and library is empty
-                if !viewModel.isLoading && viewModel.userBooks.isEmpty {
-                    Task {
+                    .listStyle(.plain)
+                    .refreshable {
                         await viewModel.loadUserBooks()
                     }
                 }
             }
-            // Removed the .alert modifier as errors are now handled inline
+        }
+        .navigationTitle("My Library")
+        .searchable(text: $searchText, prompt: "Search your library")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Picker("Sort By", selection: $sortOption) {
+                        ForEach(LibrarySortOption.allCases, id: \.self) { option in
+                            Label(option.rawValue, systemImage: option.icon)
+                                .tag(option)
+                        }
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down.circle")
+                }
+            }
+        }
+        .onAppear {
+            if !viewModel.isLoading && viewModel.userBooks.isEmpty {
+                Task {
+                    await viewModel.loadUserBooks()
+                }
+            }
         }
     }
     
@@ -178,8 +220,6 @@ struct MyLibraryView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
-            // This NavigationLink will work correctly as long as MyLibraryView
-            // is hosted within the MainTabView.
             NavigationLink(destination: BookDirectoryView()) {
                 Text("Browse Books")
                     .fontWeight(.semibold)
@@ -192,4 +232,3 @@ struct MyLibraryView: View {
         .padding()
     }
 }
-
