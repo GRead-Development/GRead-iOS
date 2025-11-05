@@ -3,25 +3,43 @@ import Foundation
 struct ActivityItem: Identifiable, Codable {
     let id: Int
     let userId: Int
+    let userName: String
     let content: String
+    let action: String
     let date: String
     let type: String
-    let userName: String?
+    let dateFormatted: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
+        case userName = "user_name"
         case content
+        case action
         case date
         case type
-        case userName = "user_name"
+        case dateFormatted = "date_formatted"
     }
     
     var formattedContent: String {
-        content.stripHTML()
+        content.cleanHTML()
+    }
+    
+    var displayAction: String {
+        action.cleanHTML()
+    }
+    
+    var displayUserName: String {
+        userName.decodingHTMLEntities()
     }
     
     var timeAgo: String {
+        // Use the date_formatted from server if available
+        if let formatted = dateFormatted, !formatted.isEmpty {
+            return formatted
+        }
+        
+        // Fallback to client-side formatting
         guard let date = ISO8601DateFormatter().date(from: date) else {
             return "Recently"
         }

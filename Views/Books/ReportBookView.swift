@@ -1,4 +1,4 @@
-import UIKit
+internal import UIKit
 import SwiftUI
 import Foundation
 struct ReportBookView: View {

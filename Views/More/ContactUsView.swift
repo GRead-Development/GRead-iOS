@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import UIKit
+internal import UIKit
 struct ContactUsView: View {
     @State private var name = ""
     @State private var email = ""

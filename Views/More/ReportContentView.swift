@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import UIKit
+internal import UIKit
 struct ReportContentView: View {
     @State private var reportType = "Book Content"
     @State private var contentURL = ""

@@ -94,7 +94,6 @@ struct MyLibraryView: View {
         .navigationTitle("My Library")
         .sheet(isPresented: $showLoginSheet) {
             LoginView()
-                .environmentObject(authManager)
         }
     }
     
