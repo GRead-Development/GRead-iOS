@@ -43,7 +43,7 @@ struct TermsOfServiceView: View {
                 """)
                 
                 Button(action: {
-                    if let url = URL(string: "https://gread.fun/terms") {
+                    if let url = URL(string: "https://gread.fun/terms-of-service") {
                         UIApplication.shared.open(url)
                     }
                 }) {

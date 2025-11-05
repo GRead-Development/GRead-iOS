@@ -121,6 +121,7 @@
 				Activity/GroupsView.swift,
 				Activity/NewPostView.swift,
 				Auth/LoginView.swift,
+				Auth/RegistrationView.swift,
 				Books/BookDetailView.swift,
 				Books/BookDirectoryView.swift,
 				Books/BookRowView.swift,
@@ -500,6 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GRead/GRead.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z463F93SW9;
@@ -536,6 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GRead/GRead.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z463F93SW9;

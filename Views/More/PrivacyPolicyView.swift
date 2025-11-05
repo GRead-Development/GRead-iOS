@@ -32,7 +32,7 @@ struct PrivacyPolicyView: View {
                 """)
                 
                 Button(action: {
-                    if let url = URL(string: "https://gread.fun/privacy") {
+                    if let url = URL(string: "https://gread.fun/privacy-policy") {
                         UIApplication.shared.open(url)
                     }
                 }) {

@@ -7,8 +7,9 @@ struct GReadApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authManager)
+            LoginView()
+       //     ContentView()
+         //       .environmentObject(authManager)
         }
     }
 }

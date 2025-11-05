@@ -1,4 +1,5 @@
 import SwiftUI
+import AuthenticationServices // Import for Sign in with Apple
 
 struct LoginView: View {
     @EnvironmentObject var authManager: AuthenticationManager
@@ -34,6 +35,7 @@ struct LoginView: View {
                         .foregroundColor(.red)
                         .font(.caption)
                         .multilineTextAlignment(.center)
+                        .padding(.horizontal)
                 }
                 
                 Button(action: login) {
@@ -53,6 +55,29 @@ struct LoginView: View {
                 .padding(.horizontal)
                 .disabled(isLoading || username.isEmpty || password.isEmpty)
                 
+                // --- NEW: SIGN IN WITH APPLE BUTTON ---
+                SignInWithAppleButton(
+                    .signIn, // Use .signIn or .continue based on your preference
+                    onRequest: { request in
+                        request.requestedScopes = [.fullName, .email]
+                    },
+                    onCompletion: { result in
+                        authManager.handleAppleSignIn(result: result)
+                    }
+                )
+                .signInWithAppleButtonStyle(.black) // .white, .whiteOutline
+                .frame(height: 50)
+                .cornerRadius(10)
+                .padding(.horizontal)
+                .padding(.top, 8)
+
+                // --- NEW: NAVIGATION LINK TO REGISTER VIEW ---
+                NavigationLink(destination: RegisterView().environmentObject(authManager)) {
+                    Text("Don't have an account? Register")
+                        .font(.subheadline)
+                }
+                .padding()
+                
                 Spacer()
             }
             .padding(.top, 50)
@@ -69,6 +94,7 @@ struct LoginView: View {
             
             switch result {
             case .success:
+                // AuthenticationManager will update state
                 break
             case .failure(let error):
                 errorMessage = error.localizedDescription
