@@ -4,42 +4,44 @@ import Combine
 
 @MainActor
 class BookDetailViewModel: ObservableObject {
-    @Published var isInLibrary = false
+    @Published var book: Book?
     @Published var isLoading = false
-    @Published var showSuccess = false
-    @Published var showError = false
     @Published var errorMessage: String?
+    @Published var showingAddedAlert = false
+    @Published var addToLibraryStatus: String?
     
-    let book: Book
-    
-    init(book: Book) {
-        self.book = book
-        checkIfInLibrary()
+    func loadBook(id: Int) async {
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            book = try await APIService.shared.fetchBook(id: id)
+        } catch {
+            errorMessage = error.localizedDescription
+            print("Error loading book: \(error)")
+        }
+        
+        isLoading = false
     }
     
-    private func checkIfInLibrary() {
-        // Check if book is already in library
-        // This is a simple implementation - you may want to improve this
-        // by checking against the actual library data
-    }
-    
-    func addToLibrary() async {
-        guard let token = UserDefaults.standard.string(forKey: "auth_token") else {
-            errorMessage = "You must be logged in to add books"
-            showError = true
+    func addToLibrary(bookId: Int, status: String) async {
+        guard let _ = UserDefaults.standard.string(forKey: "auth_token") else {
+            errorMessage = "Please log in to add books to your library"
             return
         }
         
         isLoading = true
-        defer { isLoading = false }
+        errorMessage = nil
         
         do {
-            try await APIService.shared.addBookToLibrary(bookId: book.id, token: token)
-            isInLibrary = true
-            showSuccess = true
+            _ = try await APIService.shared.addBookToLibrary(bookId: bookId, status: status)
+            addToLibraryStatus = status
+            showingAddedAlert = true
         } catch {
             errorMessage = error.localizedDescription
-            showError = true
+            print("Error adding book to library: \(error)")
         }
+        
+        isLoading = false
     }
 }

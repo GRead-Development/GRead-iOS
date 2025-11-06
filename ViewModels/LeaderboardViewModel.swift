@@ -1,24 +1,24 @@
-import Combine
 import Foundation
+import SwiftUI
+import Combine
+
 @MainActor
 class LeaderboardViewModel: ObservableObject {
-    @Published var entries: [LeaderboardEntry] = []
+    @Published var leaderboard: Leaderboard?
     @Published var isLoading = false
-    
-    private let type: String
-    
-    init(type: String) {
-        self.type = type
-    }
+    @Published var errorMessage: String?
     
     func loadLeaderboard() async {
         isLoading = true
-        defer { isLoading = false }
+        errorMessage = nil
         
         do {
-            entries = try await APIService.shared.fetchLeaderboard(type: type)
+            leaderboard = try await APIService.shared.fetchLeaderboard()
         } catch {
+            errorMessage = error.localizedDescription
             print("Error loading leaderboard: \(error)")
         }
+        
+        isLoading = false
     }
 }

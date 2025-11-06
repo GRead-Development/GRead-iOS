@@ -6,6 +6,7 @@ import Combine
 class SearchViewModel: ObservableObject {
     @Published var searchResults: [Book] = []
     @Published var isSearching = false
+    @Published var errorMessage: String?
     
     private var searchTask: Task<Void, Never>?
     
@@ -13,28 +14,33 @@ class SearchViewModel: ObservableObject {
         // Cancel previous search
         searchTask?.cancel()
         
-        guard query.count >= 3 else {
+        guard !query.isEmpty else {
             searchResults = []
             return
         }
         
+        // Debounce search
         searchTask = Task {
-            isSearching = true
-            defer { isSearching = false }
-            
-            // Debounce
-            try? await Task.sleep(nanoseconds: 500_000_000)
+            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
             
             guard !Task.isCancelled else { return }
             
-            do {
-                searchResults = try await APIService.shared.searchBooks(query: query)
-            } catch {
-                print("Search error: \(error)")
-                searchResults = []
-            }
+            await performSearch(query: query)
+        }
+    }
+    
+    private func performSearch(query: String) async {
+        isSearching = true
+        errorMessage = nil
+        
+        do {
+            searchResults = try await APIService.shared.searchBooks(query: query)
+        } catch {
+            errorMessage = error.localizedDescription
+            print("Error searching books: \(error)")
+            searchResults = []
         }
         
-        await searchTask?.value
+        isSearching = false
     }
 }

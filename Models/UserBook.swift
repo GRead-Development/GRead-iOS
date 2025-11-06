@@ -1,10 +1,10 @@
 import Foundation
 
-struct UserBook: Identifiable, Hashable {
+struct UserBook: Codable, Identifiable, Hashable {
     let id: Int
     let book: Book
-    let currentPage: Int
-    let status: String
+    var currentPage: Int
+    var status: String
     
     // Manual Hashable implementation
     func hash(into hasher: inout Hasher) {
