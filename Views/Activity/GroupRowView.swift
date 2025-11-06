@@ -1,4 +1,5 @@
 import SwiftUI
+
 struct GroupRowView: View {
     let group: Group
     
@@ -7,22 +8,23 @@ struct GroupRowView: View {
             Text(group.name)
                 .font(.headline)
             
-            Text(group.description.stripHTML())
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .lineLimit(2)
+            if let description = group.description {
+                Text(description.stripHTML())
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
+            }
             
-            if let memberCount = group.memberCount {
-                HStack {
-                    Image(systemName: "person.2.fill")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text("\(memberCount) members")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
+            HStack {
+                Image(systemName: "person.2.fill")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(group.status.capitalized)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
         .padding(.vertical, 4)
     }
 }
+

@@ -38,14 +38,13 @@ struct ActivityFeedView: View {
                     emptyActivityView
                 } else {
                     List {
-                        ForEach(filteredActivities) { activity in
+                        ForEach(filteredActivities.indices, id: \.self) { index in
+                            let activity = filteredActivities[index]
                             ActivityRowView(activity: activity)
                                 .onAppear {
-                                    // Only trigger load more when we reach the 3rd-to-last item
-                                    // and we're not already loading
-                                    if let index = filteredActivities.firstIndex(where: { $0.id == activity.id }),
-                                       index >= filteredActivities.count - 3,
-                                       !viewModel.isLoading {
+                                    // FIXED: Better load-more triggering
+                                    // Only load when we're near the end (last 3 items)
+                                    if index >= filteredActivities.count - 3 {
                                         Task {
                                             await viewModel.loadMoreActivity()
                                         }
@@ -53,12 +52,14 @@ struct ActivityFeedView: View {
                                 }
                         }
                         
-                        if viewModel.isLoading {
+                        // Show loading indicator at the bottom when loading more
+                        if viewModel.isLoading && !viewModel.activities.isEmpty {
                             HStack {
                                 Spacer()
                                 ProgressView()
                                 Spacer()
                             }
+                            .padding()
                         }
                     }
                     .listStyle(.plain)
@@ -67,23 +68,15 @@ struct ActivityFeedView: View {
                     }
                 }
             }
-            .navigationTitle("Activity Feed")
+            .navigationTitle("Activity")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavigationLink(destination: GroupsView()) {
-                        Image(systemName: "person.3.fill")
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        if authManager.isAuthenticated {
+                if authManager.isAuthenticated {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
                             showNewPostSheet = true
-                        } else {
-                            showLoginPrompt = true
+                        } label: {
+                            Image(systemName: "square.and.pencil")
                         }
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 22))
                     }
                 }
             }
@@ -91,32 +84,35 @@ struct ActivityFeedView: View {
                 NewPostView(viewModel: viewModel, isPresented: $showNewPostSheet)
             }
             .alert("Login Required", isPresented: $showLoginPrompt) {
-                Button("Cancel", role: .cancel) {}
+                Button("OK", role: .cancel) {}
             } message: {
                 Text("Please log in to post updates.")
             }
-            .onAppear {
-                if viewModel.activities.isEmpty {
-                    Task {
-                        await viewModel.loadInitialActivity()
-                    }
-                }
+            .task {
+                await viewModel.loadInitialActivity()
             }
         }
     }
     
     private var emptyActivityView: some View {
         VStack(spacing: 20) {
-            Image(systemName: "list.bullet.rectangle")
+            Image(systemName: "flame.fill")
                 .font(.system(size: 60))
                 .foregroundColor(.gray)
             Text("No Activity Yet")
                 .font(.headline)
                 .foregroundColor(.gray)
-            Text("Follow other users or post an update to see activity here.")
+            Text("Be the first to post something!")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
+            
+            if authManager.isAuthenticated {
+                Button("Create Post") {
+                    showNewPostSheet = true
+                }
+                .buttonStyle(.borderedProminent)
+            }
         }
         .padding()
     }

@@ -1,13 +1,6 @@
-struct LeaderboardEntry: Identifiable, Decodable {
+struct LeaderboardEntry: Identifiable, Hashable {
     let id: Int
-    let displayName: String
-    let value: Int
-    let profileURL: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case displayName = "display_name"
-        case value
-        case profileURL = "profile_url"
-    }
+    let userName: String
+    let score: Int
+    let rank: Int
 }

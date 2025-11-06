@@ -5,7 +5,9 @@ class APIService {
     
     private init() {}
     
-    func fetchBooks(page: Int) async throws -> [Book] {
+    // MARK: - Books
+    
+    func fetchBooks(page: Int = 1) async throws -> [Book] {
         let url = URL(string: "\(APIConfig.wpAPI)/book?per_page=20&page=\(page)")!
         let (data, _) = try await URLSession.shared.data(from: url)
         let books = try JSONDecoder().decode([Book].self, from: data)
@@ -27,6 +29,8 @@ class APIService {
         let books = try JSONDecoder().decode([Book].self, from: data)
         return books
     }
+    
+    // MARK: - Library Management
     
     func addBookToLibrary(bookId: Int, token: String) async throws {
         let url = URL(string: "\(APIConfig.customAPI)/library/add")!
@@ -57,23 +61,22 @@ class APIService {
             return []
         }
         
-        return json.compactMap { item in
-            guard let bookId = item["book_id"] as? Int,
+        return json.compactMap { item -> UserBook? in
+            guard let bookId = item["book_id"] as? Int ?? (item["book"] as? [String: Any])?["id"] as? Int,
                   let currentPage = item["current_page"] as? Int,
-                  let status = item["status"] as? String else {
+                  let status = item["status"] as? String,
+                  let bookData = item["book"] as? [String: Any],
+                  let title = bookData["title"] as? String else {
                 return nil
             }
-            
-            let bookData = item["book"] as? [String: Any]
-            let title = bookData?["title"] as? String ?? "Unknown"
             
             let book = Book(
                 id: bookId,
                 title: title,
-                author: bookData?["author"] as? String,
-                isbn: bookData?["isbn"] as? String,
-                pageCount: bookData?["page_count"] as? Int,
-                content: bookData?["content"] as? String
+                author: bookData["author"] as? String,
+                isbn: bookData["isbn"] as? String,
+                pageCount: bookData["page_count"] as? Int,
+                content: bookData["content"] as? String
             )
             
             return UserBook(
@@ -87,6 +90,7 @@ class APIService {
     
     func updateProgress(bookId: Int, currentPage: Int, token: String) async throws {
         let url = URL(string: "\(APIConfig.customAPI)/library/progress")!
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -106,18 +110,41 @@ class APIService {
         }
     }
     
+    func removeBookFromLibrary(bookId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/library/remove")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["book_id": bookId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to remove book"])
+        }
+    }
+    
+    // MARK: - User Stats
+    
     func fetchUserStats(userId: Int, token: String) async throws -> UserStats {
         let url = URL(string: "\(APIConfig.customAPI)/user/\(userId)/stats")!
+        
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let (data, _) = try await URLSession.shared.data(for: request)
         let stats = try JSONDecoder().decode(UserStats.self, from: data)
+        
         return stats
     }
     
+    // MARK: - Activity Feed (FIXED)
+    
     func fetchActivityFeed(page: Int, token: String?) async throws -> [ActivityItem] {
-        // Use the new GRead activity endpoint instead of BuddyPress
         var components = URLComponents(string: "\(APIConfig.customAPI)/activity")!
         components.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
@@ -141,7 +168,7 @@ class APIService {
             return []
         }
         
-        return activitiesArray.compactMap { activityDict in
+        return activitiesArray.compactMap { activityDict -> ActivityItem? in
             guard let id = activityDict["id"] as? Int,
                   let userId = activityDict["user_id"] as? Int,
                   let userName = activityDict["user_name"] as? String,
@@ -153,11 +180,13 @@ class APIService {
             }
             
             let dateFormatted = activityDict["date_formatted"] as? String
+            let avatarUrl = activityDict["avatar_url"] as? String
             
             return ActivityItem(
                 id: id,
                 userId: userId,
                 userName: userName,
+                avatarUrl: avatarUrl,
                 content: content,
                 action: action,
                 date: date,
@@ -185,6 +214,133 @@ class APIService {
         }
     }
     
+    // MARK: - User Moderation
+    
+    func blockUser(userId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/user/block")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["user_id": userId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to block user"])
+        }
+    }
+    
+    func unblockUser(userId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/user/unblock")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["user_id": userId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unblock user"])
+        }
+    }
+    
+    func muteUser(userId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/user/mute")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["user_id": userId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to mute user"])
+        }
+    }
+    
+    func unmuteUser(userId: Int, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/user/unmute")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Int] = ["user_id": userId]
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unmute user"])
+        }
+    }
+    
+    func reportUser(userId: Int, reason: String, token: String) async throws {
+        let url = URL(string: "\(APIConfig.customAPI)/user/report")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Any] = [
+            "user_id": userId,
+            "reason": reason
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to report user"])
+        }
+    }
+    
+    func fetchBlockedUsers(token: String) async throws -> [Int] {
+        let url = URL(string: "\(APIConfig.customAPI)/user/blocked_list")!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let blockedUsers = json["blocked_users"] as? [Int] else {
+            return []
+        }
+        
+        return blockedUsers
+    }
+    
+    func fetchMutedUsers(token: String) async throws -> [Int] {
+        let url = URL(string: "\(APIConfig.customAPI)/user/muted_list")!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let mutedUsers = json["muted_users"] as? [Int] else {
+            return []
+        }
+        
+        return mutedUsers
+    }
+    
+    // MARK: - Groups
+    
     func fetchGroups(token: String?) async throws -> [Group] {
         let url = URL(string: "\(APIConfig.baseURL)/wp-json/buddypress/v1/groups")!
         var request = URLRequest(url: url)
@@ -198,77 +354,10 @@ class APIService {
         return groups
     }
     
-    func removeBookFromLibrary(bookId: Int, token: String) async throws {
-        let url = URL(string: "\(APIConfig.customAPI)/library/remove")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body: [String: Int] = ["book_id": bookId]
-        request.httpBody = try JSONEncoder().encode(body)
-        
-        let (_, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to remove book"])
-        }
-    }
+    // MARK: - Leaderboard
     
     func fetchLeaderboard(type: String, limit: Int = 15) async throws -> [LeaderboardEntry] {
+        // TODO: Implement when backend endpoint is ready
         return []
-    }
-    
-    func reportUser(userId: Int, reason: String, description: String, token: String) async throws {
-        let url = URL(string: "\(APIConfig.customAPI)/report/user")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body: [String: Any] = [
-            "user_id": userId,
-            "reason": reason,
-            "description": description
-        ]
-        request.httpBody = try JSONSerialization.data(withJSONObject: body)
-        
-        let (_, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to submit report"])
-        }
-    }
-}
-
-struct BuddyPressActivity: Codable {
-    let id: Int
-    let user_id: Int
-    let content: RenderedContent
-    let date: String
-    let type: String
-    let user: BPUser?
-    
-    struct RenderedContent: Codable {
-        let rendered: String
-    }
-    
-    struct BPUser: Codable {
-        let name: String
-    }
-}
-
-
-struct ActivityFeedResponse: Codable {
-    let activities: [ActivityItem]
-    let total: Int
-    let hasMore: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case activities
-        case total
-        case hasMore = "has_more"
     }
 }
