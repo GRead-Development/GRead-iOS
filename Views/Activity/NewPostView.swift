@@ -30,7 +30,7 @@ struct NewPostView: View {
                         // FIX: Added a delay before focusing the editor.
                         // This prevents the sheet animation from conflicting with
                         // the keyboard animation, resolving the "hang".
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                             isEditorFocused = true
                         }
                     }

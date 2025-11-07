@@ -8,10 +8,9 @@ class ActivityFeedViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var isPosting = false
     @Published var errorMessage: String?
-    @Published var canLoadMore = true
     
     private var currentPage = 1
-    private var isCurrentlyLoading = false
+    private var canLoadMore = true
     
     func loadInitialActivity() async {
         currentPage = 1
@@ -21,15 +20,12 @@ class ActivityFeedViewModel: ObservableObject {
     }
     
     func loadMoreActivity() async {
-        guard !isCurrentlyLoading && canLoadMore else { return }
+        guard !isLoading && canLoadMore else { return }
         currentPage += 1
         await loadActivity()
     }
     
     private func loadActivity() async {
-        guard !isCurrentlyLoading else { return }
-        
-        isCurrentlyLoading = true
         isLoading = true
         errorMessage = nil
         
@@ -50,7 +46,6 @@ class ActivityFeedViewModel: ObservableObject {
         }
         
         isLoading = false
-        isCurrentlyLoading = false
     }
     
     func postUpdate(content: String) async -> Bool {

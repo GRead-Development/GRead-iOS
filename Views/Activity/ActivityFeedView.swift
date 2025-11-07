@@ -37,42 +37,32 @@ struct ActivityFeedView: View {
                 } else if filteredActivities.isEmpty {
                     emptyActivityView
                 } else {
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            ForEach(filteredActivities) { activity in
-                                VStack(spacing: 0) {
-                                    ActivityRowView(activity: activity)
-                                        .padding(.horizontal)
-                                        .padding(.vertical, 8)
-                                    
-                                    Divider()
-                                }
-                                .background(Color(uiColor: .systemBackground))
-                            }
-                            
-                            // Show loading indicator at the bottom when loading more
-                            if viewModel.isLoading && !viewModel.activities.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    ProgressView()
-                                    Spacer()
-                                }
-                                .frame(height: 44)
-                                .padding()
-                            }
-                            
-                            // Invisible load-more trigger
-                            if viewModel.canLoadMore && !viewModel.isLoading {
-                                Color.clear
-                                    .frame(height: 20)
-                                    .onAppear {
+                    List {
+                        ForEach(filteredActivities.indices, id: \.self) { index in
+                            let activity = filteredActivities[index]
+                            ActivityRowView(activity: activity)
+                                .onAppear {
+                                    // FIXED: Better load-more triggering
+                                    // Only load when we're near the end (last 3 items)
+                                    if index >= filteredActivities.count - 3 {
                                         Task {
                                             await viewModel.loadMoreActivity()
                                         }
                                     }
+                                }
+                        }
+                        
+                        // Show loading indicator at the bottom when loading more
+                        if viewModel.isLoading && !viewModel.activities.isEmpty {
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
                             }
+                            .padding()
                         }
                     }
+                    .listStyle(.plain)
                     .refreshable {
                         await viewModel.loadInitialActivity()
                     }

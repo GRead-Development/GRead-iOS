@@ -54,7 +54,7 @@ struct PointsLeaderboardView: View {
         .listStyle(.plain)
     }
     
-    private func leaderboardRow(index: Int, entry: LeaderboardDisplayEntry) -> some View {
+    private func leaderboardRow(index: Int, entry: LeaderboardEntry) -> some View {
         HStack {
             rankBadge(rank: index + 1)
             

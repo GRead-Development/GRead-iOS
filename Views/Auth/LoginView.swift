@@ -25,7 +25,7 @@ struct LoginView: View {
                 .foregroundColor(.secondary)
             
             VStack(spacing: 15) {
-                TextField("Username", text: $username)
+                TextField("Username or Email", text: $username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
