@@ -8,13 +8,64 @@
 
 /* Begin PBXBuildFile section */
 		18EDBD132EB950E900B679DA /* GReadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EDBC692EB936BC00B679DA /* GReadApp.swift */; };
+		18EDBD352EB9686700B679DA /* settings87.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD312EB9686700B679DA /* settings87.png */; };
+		18EDBD362EB9686700B679DA /* spotlight80.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD322EB9686700B679DA /* spotlight80.png */; };
+		18EDBD372EB9686700B679DA /* ipadPro167.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD202EB9686700B679DA /* ipadPro167.png */; };
+		18EDBD382EB9686700B679DA /* ipadNotification40.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1F2EB9686700B679DA /* ipadNotification40.png */; };
+		18EDBD392EB9686700B679DA /* ipad152.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1D2EB9686700B679DA /* ipad152.png */; };
+		18EDBD3A2EB9686700B679DA /* mac256.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2B2EB9686700B679DA /* mac256.png */; };
+		18EDBD3B2EB9686700B679DA /* mac1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2D2EB9686700B679DA /* mac1024.png */; };
+		18EDBD3C2EB9686700B679DA /* settings58.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD302EB9686700B679DA /* settings58.png */; };
+		18EDBD3D2EB9686700B679DA /* mac16.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD272EB9686700B679DA /* mac16.png */; };
+		18EDBD3E2EB9686700B679DA /* ipadSettings58.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD222EB9686700B679DA /* ipadSettings58.png */; };
+		18EDBD3F2EB9686700B679DA /* mac64.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD292EB9686700B679DA /* mac64.png */; };
+		18EDBD402EB9686700B679DA /* iphone180.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD262EB9686700B679DA /* iphone180.png */; };
+		18EDBD412EB9686700B679DA /* appstore1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1A2EB9686700B679DA /* appstore1024.png */; };
+		18EDBD422EB9686700B679DA /* ipadSpotlight80.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD242EB9686700B679DA /* ipadSpotlight80.png */; };
+		18EDBD432EB9686700B679DA /* ipadSettings29.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD212EB9686700B679DA /* ipadSettings29.png */; };
+		18EDBD442EB9686700B679DA /* mac32.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD282EB9686700B679DA /* mac32.png */; };
+		18EDBD452EB9686700B679DA /* mac128.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2A2EB9686700B679DA /* mac128.png */; };
+		18EDBD462EB9686700B679DA /* spotlight120.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD332EB9686700B679DA /* spotlight120.png */; };
+		18EDBD472EB9686700B679DA /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1B2EB9686700B679DA /* Contents.json */; };
+		18EDBD482EB9686700B679DA /* ipadNotification20.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1E2EB9686700B679DA /* ipadNotification20.png */; };
+		18EDBD492EB9686700B679DA /* ipad76.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD1C2EB9686700B679DA /* ipad76.png */; };
+		18EDBD4A2EB9686700B679DA /* notification40.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2E2EB9686700B679DA /* notification40.png */; };
+		18EDBD4B2EB9686700B679DA /* ipadSpotlight40.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD232EB9686700B679DA /* ipadSpotlight40.png */; };
+		18EDBD4C2EB9686700B679DA /* iphone120.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD252EB9686700B679DA /* iphone120.png */; };
+		18EDBD4D2EB9686700B679DA /* mac512.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2C2EB9686700B679DA /* mac512.png */; };
+		18EDBD4E2EB9686700B679DA /* notification60.png in Resources */ = {isa = PBXBuildFile; fileRef = 18EDBD2F2EB9686700B679DA /* notification60.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18EDBC372EB9348F00B679DA /* GRead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GRead.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18EDBC692EB936BC00B679DA /* GReadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GReadApp.swift; sourceTree = "<group>"; };
 		18EDBC732EB9387600B679DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18EDBDE92EBAEB1100B679DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		18EDBD1A2EB9686700B679DA /* appstore1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore1024.png; sourceTree = "<group>"; };
+		18EDBD1B2EB9686700B679DA /* Contents.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		18EDBD1C2EB9686700B679DA /* ipad76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad76.png; sourceTree = "<group>"; };
+		18EDBD1D2EB9686700B679DA /* ipad152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad152.png; sourceTree = "<group>"; };
+		18EDBD1E2EB9686700B679DA /* ipadNotification20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadNotification20.png; sourceTree = "<group>"; };
+		18EDBD1F2EB9686700B679DA /* ipadNotification40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadNotification40.png; sourceTree = "<group>"; };
+		18EDBD202EB9686700B679DA /* ipadPro167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadPro167.png; sourceTree = "<group>"; };
+		18EDBD212EB9686700B679DA /* ipadSettings29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadSettings29.png; sourceTree = "<group>"; };
+		18EDBD222EB9686700B679DA /* ipadSettings58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadSettings58.png; sourceTree = "<group>"; };
+		18EDBD232EB9686700B679DA /* ipadSpotlight40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadSpotlight40.png; sourceTree = "<group>"; };
+		18EDBD242EB9686700B679DA /* ipadSpotlight80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadSpotlight80.png; sourceTree = "<group>"; };
+		18EDBD252EB9686700B679DA /* iphone120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone120.png; sourceTree = "<group>"; };
+		18EDBD262EB9686700B679DA /* iphone180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone180.png; sourceTree = "<group>"; };
+		18EDBD272EB9686700B679DA /* mac16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac16.png; sourceTree = "<group>"; };
+		18EDBD282EB9686700B679DA /* mac32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac32.png; sourceTree = "<group>"; };
+		18EDBD292EB9686700B679DA /* mac64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac64.png; sourceTree = "<group>"; };
+		18EDBD2A2EB9686700B679DA /* mac128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac128.png; sourceTree = "<group>"; };
+		18EDBD2B2EB9686700B679DA /* mac256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac256.png; sourceTree = "<group>"; };
+		18EDBD2C2EB9686700B679DA /* mac512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac512.png; sourceTree = "<group>"; };
+		18EDBD2D2EB9686700B679DA /* mac1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac1024.png; sourceTree = "<group>"; };
+		18EDBD2E2EB9686700B679DA /* notification40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notification40.png; sourceTree = "<group>"; };
+		18EDBD2F2EB9686700B679DA /* notification60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notification60.png; sourceTree = "<group>"; };
+		18EDBD302EB9686700B679DA /* settings58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings58.png; sourceTree = "<group>"; };
+		18EDBD312EB9686700B679DA /* settings87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings87.png; sourceTree = "<group>"; };
+		18EDBD322EB9686700B679DA /* spotlight80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotlight80.png; sourceTree = "<group>"; };
+		18EDBD332EB9686700B679DA /* spotlight120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotlight120.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -80,7 +131,6 @@
 				Library/MyLibraryView.swift,
 				MainTabView.swift,
 				More/AboutView.swift,
-				More/BlockedUsersView.swift,
 				More/BooksLeaderboardView.swift,
 				More/ContactUsView.swift,
 				More/MoreMenuView.swift,
@@ -170,7 +220,7 @@
 				18EDBCD92EB950C600B679DA /* Views */,
 				18EDBC692EB936BC00B679DA /* GReadApp.swift */,
 				18EDBC732EB9387600B679DA /* Info.plist */,
-				18EDBDE92EBAEB1100B679DA /* Assets.xcassets */,
+				18EDBD342EB9686700B679DA /* AppIcon.appiconset */,
 			);
 			sourceTree = "<group>";
 		};
@@ -180,6 +230,39 @@
 				18EDBC372EB9348F00B679DA /* GRead.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18EDBD342EB9686700B679DA /* AppIcon.appiconset */ = {
+			isa = PBXGroup;
+			children = (
+				18EDBD1A2EB9686700B679DA /* appstore1024.png */,
+				18EDBD1B2EB9686700B679DA /* Contents.json */,
+				18EDBD1C2EB9686700B679DA /* ipad76.png */,
+				18EDBD1D2EB9686700B679DA /* ipad152.png */,
+				18EDBD1E2EB9686700B679DA /* ipadNotification20.png */,
+				18EDBD1F2EB9686700B679DA /* ipadNotification40.png */,
+				18EDBD202EB9686700B679DA /* ipadPro167.png */,
+				18EDBD212EB9686700B679DA /* ipadSettings29.png */,
+				18EDBD222EB9686700B679DA /* ipadSettings58.png */,
+				18EDBD232EB9686700B679DA /* ipadSpotlight40.png */,
+				18EDBD242EB9686700B679DA /* ipadSpotlight80.png */,
+				18EDBD252EB9686700B679DA /* iphone120.png */,
+				18EDBD262EB9686700B679DA /* iphone180.png */,
+				18EDBD272EB9686700B679DA /* mac16.png */,
+				18EDBD282EB9686700B679DA /* mac32.png */,
+				18EDBD292EB9686700B679DA /* mac64.png */,
+				18EDBD2A2EB9686700B679DA /* mac128.png */,
+				18EDBD2B2EB9686700B679DA /* mac256.png */,
+				18EDBD2C2EB9686700B679DA /* mac512.png */,
+				18EDBD2D2EB9686700B679DA /* mac1024.png */,
+				18EDBD2E2EB9686700B679DA /* notification40.png */,
+				18EDBD2F2EB9686700B679DA /* notification60.png */,
+				18EDBD302EB9686700B679DA /* settings58.png */,
+				18EDBD312EB9686700B679DA /* settings87.png */,
+				18EDBD322EB9686700B679DA /* spotlight80.png */,
+				18EDBD332EB9686700B679DA /* spotlight120.png */,
+			);
+			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +326,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18EDBD352EB9686700B679DA /* settings87.png in Resources */,
+				18EDBD362EB9686700B679DA /* spotlight80.png in Resources */,
+				18EDBD372EB9686700B679DA /* ipadPro167.png in Resources */,
+				18EDBD382EB9686700B679DA /* ipadNotification40.png in Resources */,
+				18EDBD392EB9686700B679DA /* ipad152.png in Resources */,
+				18EDBD3A2EB9686700B679DA /* mac256.png in Resources */,
+				18EDBD3B2EB9686700B679DA /* mac1024.png in Resources */,
+				18EDBD3C2EB9686700B679DA /* settings58.png in Resources */,
+				18EDBD3D2EB9686700B679DA /* mac16.png in Resources */,
+				18EDBD3E2EB9686700B679DA /* ipadSettings58.png in Resources */,
+				18EDBD3F2EB9686700B679DA /* mac64.png in Resources */,
+				18EDBD402EB9686700B679DA /* iphone180.png in Resources */,
+				18EDBD412EB9686700B679DA /* appstore1024.png in Resources */,
+				18EDBD422EB9686700B679DA /* ipadSpotlight80.png in Resources */,
+				18EDBD432EB9686700B679DA /* ipadSettings29.png in Resources */,
+				18EDBD442EB9686700B679DA /* mac32.png in Resources */,
+				18EDBD452EB9686700B679DA /* mac128.png in Resources */,
+				18EDBD462EB9686700B679DA /* spotlight120.png in Resources */,
+				18EDBD472EB9686700B679DA /* Contents.json in Resources */,
+				18EDBD482EB9686700B679DA /* ipadNotification20.png in Resources */,
+				18EDBD492EB9686700B679DA /* ipad76.png in Resources */,
+				18EDBD4A2EB9686700B679DA /* notification40.png in Resources */,
+				18EDBD4B2EB9686700B679DA /* ipadSpotlight40.png in Resources */,
+				18EDBD4C2EB9686700B679DA /* iphone120.png in Resources */,
+				18EDBD4D2EB9686700B679DA /* mac512.png in Resources */,
+				18EDBD4E2EB9686700B679DA /* notification60.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +509,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GRead;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -437,7 +546,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GRead;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
