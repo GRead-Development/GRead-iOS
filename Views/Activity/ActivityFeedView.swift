@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct ActivityFeedView: View {
-    @EnvironmentObject var authManager: AuthenticationManager
     @StateObject private var viewModel = ActivityFeedViewModel()
     @State private var showNewPostSheet = false
-    @State private var showLoginPrompt = false
     
     var body: some View {
         NavigationView {
@@ -55,25 +53,17 @@ struct ActivityFeedView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        if authManager.isAuthenticated {
-                            showNewPostSheet = true
-                        } else {
-                            showLoginPrompt = true
-                        }
-                    }) {
+                    Button(action: { showNewPostSheet = true }) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 22))
                     }
                 }
             }
             .sheet(isPresented: $showNewPostSheet) {
+                // --- THIS IS THE FIX ---
+                // You must pass the $showNewPostSheet binding to the NewPostView
+                // so it knows how to dismiss itself.
                 NewPostView(viewModel: viewModel, isPresented: $showNewPostSheet)
-            }
-            .alert("Login Required", isPresented: $showLoginPrompt) {
-                Button("Cancel", role: .cancel) {}
-            } message: {
-                Text("Please log in to post updates.")
             }
             .onAppear {
                 if viewModel.activities.isEmpty {
@@ -101,3 +91,4 @@ struct ActivityFeedView: View {
         .padding()
     }
 }
+

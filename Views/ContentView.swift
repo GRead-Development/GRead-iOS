@@ -4,6 +4,12 @@ struct ContentView: View {
     @EnvironmentObject var authManager: AuthenticationManager
     
     var body: some View {
-        MainTabView()
+        SwiftUI.Group {
+            if authManager.isAuthenticated {
+                MainTabView()
+            } else {
+                LoginView()
+            }
+        }
     }
 }
