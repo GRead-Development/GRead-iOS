@@ -1,27 +1,25 @@
 import Foundation
 
-struct ActivityItem: Identifiable, Hashable {
+struct ActivityItem: Identifiable, Codable {
     let id: Int
     let userId: Int
     let userName: String
-    let avatarUrl: String?
     let content: String
     let action: String
     let date: String
     let type: String
     let dateFormatted: String?
     
-    // Manual Hashable implementation
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userId = "user_id"
+        case userName = "user_name"
+        case content
+        case action
+        case date
+        case type
+        case dateFormatted = "date_formatted"
     }
-    
-    // Manual Equatable implementation
-    static func == (lhs: ActivityItem, rhs: ActivityItem) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    // MARK: - Computed Properties
     
     var formattedContent: String {
         content.cleanHTML()

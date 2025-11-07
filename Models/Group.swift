@@ -1,18 +1,13 @@
-import Foundation
-
-struct Group: Codable, Identifiable, Hashable {
+struct Group: Identifiable, Codable {
     let id: Int
     let name: String
-    let description: String?
-    let status: String
+    let description: String
+    let memberCount: Int?
     
-    // Manual Hashable implementation
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    // Manual Equatable implementation
-    static func == (lhs: Group, rhs: Group) -> Bool {
-        lhs.id == rhs.id
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case description
+        case memberCount = "total_member_count"
     }
 }

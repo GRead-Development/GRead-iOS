@@ -97,12 +97,10 @@ struct ReportUserView: View {
         
         Task {
             do {
-                // Combine reason and description into a single reason string
-                let fullReason = description.isEmpty ? reason : "\(reason): \(description)"
-                
                 try await APIService.shared.reportUser(
                     userId: userId,
-                    reason: fullReason,
+                    reason: reason,
+                    description: description,
                     token: token
                 )
                 isSubmitting = false

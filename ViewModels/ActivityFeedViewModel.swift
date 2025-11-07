@@ -10,7 +10,6 @@ class ActivityFeedViewModel: ObservableObject {
     
     private var currentPage = 1
     private var canLoadMore = true
-    private var isLoadingMore = false  // ADDED to prevent multiple simultaneous loads
     
     func loadInitialActivity() async {
         let token = UserDefaults.standard.string(forKey: "auth_token")
@@ -18,7 +17,6 @@ class ActivityFeedViewModel: ObservableObject {
         currentPage = 1
         canLoadMore = true
         isLoading = true
-        isLoadingMore = false  // RESET
         errorMessage = nil
         defer { isLoading = false }
         
@@ -34,13 +32,10 @@ class ActivityFeedViewModel: ObservableObject {
     }
     
     func loadMoreActivity() async {
-        // FIXED: Prevent multiple simultaneous load operations
-        guard !isLoading && !isLoadingMore && canLoadMore else { return }
+        guard !isLoading && canLoadMore else { return }
         let token = UserDefaults.standard.string(forKey: "auth_token")
         
-        isLoadingMore = true
-        defer { isLoadingMore = false }
-        
+        isLoading = true
         currentPage += 1
         
         do {
@@ -48,15 +43,14 @@ class ActivityFeedViewModel: ObservableObject {
             if newActivities.isEmpty {
                 canLoadMore = false
             } else {
-                // FIXED: Safely append activities
                 activities.append(contentsOf: newActivities)
             }
         } catch {
             print("Error loading more activity: \(error)")
-            errorMessage = error.localizedDescription
             canLoadMore = false
-            currentPage -= 1  // ADDED: Roll back page on error
         }
+        
+        isLoading = false
     }
     
     func postUpdate(content: String) async -> Bool {

@@ -6,7 +6,6 @@ struct UserStats: Codable {
     let booksCompleted: Int
     let pagesRead: Int
     let booksAdded: Int
-    let approvedReports: Int
     
     enum CodingKeys: String, CodingKey {
         case displayName = "display_name"
@@ -14,6 +13,5 @@ struct UserStats: Codable {
         case booksCompleted = "books_completed"
         case pagesRead = "pages_read"
         case booksAdded = "books_added"
-        case approvedReports = "approved_reports"
     }
 }
