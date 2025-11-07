@@ -117,8 +117,7 @@ class APIService {
     }
     
     func fetchActivityFeed(page: Int, token: String?) async throws -> [ActivityItem] {
-        // Use the new GRead activity endpoint instead of BuddyPress
-        var components = URLComponents(string: "\(APIConfig.customAPI)/activity")!
+        var components = URLComponents(string: "\(APIConfig.baseURL)/wp-json/buddypress/v1/activity")!
         components.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "per_page", value: "20")
@@ -135,34 +134,17 @@ class APIService {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        // Parse the response which includes activities array
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let activitiesArray = json["activities"] as? [[String: Any]] else {
-            return []
-        }
+        let decoder = JSONDecoder()
+        let activities = try decoder.decode([BuddyPressActivity].self, from: data)
         
-        return activitiesArray.compactMap { activityDict in
-            guard let id = activityDict["id"] as? Int,
-                  let userId = activityDict["user_id"] as? Int,
-                  let userName = activityDict["user_name"] as? String,
-                  let content = activityDict["content"] as? String,
-                  let action = activityDict["action"] as? String,
-                  let date = activityDict["date"] as? String,
-                  let type = activityDict["type"] as? String else {
-                return nil
-            }
-            
-            let dateFormatted = activityDict["date_formatted"] as? String
-            
-            return ActivityItem(
-                id: id,
-                userId: userId,
-                userName: userName,
-                content: content,
-                action: action,
-                date: date,
-                type: type,
-                dateFormatted: dateFormatted
+        return activities.map { activity in
+            ActivityItem(
+                id: activity.id,
+                userId: activity.user_id,
+                content: activity.content.rendered,
+                date: activity.date,
+                type: activity.type,
+                userName: activity.user?.name
             )
         }
     }
@@ -257,18 +239,5 @@ struct BuddyPressActivity: Codable {
     
     struct BPUser: Codable {
         let name: String
-    }
-}
-
-
-struct ActivityFeedResponse: Codable {
-    let activities: [ActivityItem]
-    let total: Int
-    let hasMore: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case activities
-        case total
-        case hasMore = "has_more"
     }
 }

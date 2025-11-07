@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-internal import UIKit
+import UIKit
 struct SiteStatsView: View {
     @State private var totalBooks = 0
     @State private var totalUsers = 0

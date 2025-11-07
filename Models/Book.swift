@@ -2,11 +2,11 @@ import Foundation
 
 struct Book: Identifiable, Decodable {
     
-    let id: Int
+ let id: Int
     let title: String
     let author: String?
     let isbn: String?
-    let pageCount: Int?
+let pageCount: Int?
     let content: String?
     
     // --- DEFINE NEW CODING KEYS ---
@@ -31,32 +31,23 @@ struct Book: Identifiable, Decodable {
         // Decode ID
         id = try container.decode(Int.self, forKey: .id)
         
-        // Decode title and clean HTML entities
-        var rawTitle = ""
+        // Decode title
         if let titleObj = try? container.decode([String: String].self, forKey: .title) {
-            rawTitle = titleObj["rendered"] ?? ""
+            title = titleObj["rendered"] ?? ""
         } else {
-            rawTitle = try container.decode(String.self, forKey: .title)
+            title = try container.decode(String.self, forKey: .title)
         }
-        // Clean HTML entities from title
-        title = rawTitle.decodingHTMLEntities()
         
-        // Decode content and clean HTML entities
+        // Decode content
         if let contentObj = try? container.decode([String: String].self, forKey: .content) {
-            let rawContent = contentObj["rendered"] ?? ""
-            content = rawContent.decodingHTMLEntities()
+            content = contentObj["rendered"]
         } else {
             content = nil
         }
         
         // --- DECODE CUSTOM META FIELDS ---
         if let metaContainer = try? container.nestedContainer(keyedBy: MetaCodingKeys.self, forKey: .bookMeta) {
-            // Decode author and clean HTML entities
-            if let rawAuthor = try metaContainer.decodeIfPresent(String.self, forKey: .author) {
-                author = rawAuthor.decodingHTMLEntities()
-            } else {
-                author = nil
-            }
+            author = try metaContainer.decodeIfPresent(String.self, forKey: .author)
             isbn = try metaContainer.decodeIfPresent(String.self, forKey: .isbn)
             pageCount = try metaContainer.decodeIfPresent(Int.self, forKey: .pageCount)
         } else {
@@ -66,6 +57,8 @@ struct Book: Identifiable, Decodable {
             pageCount = nil
         }
     }
+    
+    // ... (Your custom init can remain the same) ...
 
     init(id: Int, title: String, author: String?, isbn: String?, pageCount: Int?, content: String?) {
         self.id = id
