@@ -1,4 +1,3 @@
-import SwiftUI
 struct GroupRowView: View {
     let group: Group
     

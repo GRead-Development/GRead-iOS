@@ -1,4 +1,3 @@
-import SwiftUI
 struct ActivityRowView: View {
     let activity: ActivityItem
     
@@ -31,7 +30,7 @@ struct ActivityRowView: View {
     }
     
     private var activityTypeIcon: some View {
-        SwiftUI.Group {
+        Group {
             switch activity.type {
             case "activity_update":
                 Image(systemName: "text.bubble.fill")
