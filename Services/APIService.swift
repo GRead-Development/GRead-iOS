@@ -361,28 +361,3 @@ class APIService {
         }
     }
     }
-
-
-extension APIService {
-    
-    func reportUser(userId: Int, reason: String, token: String) async throws {
-        let url = try createURL(endpoint: "/wp-json/gread/v1/report-user")
-        var request = createRequest(url: url, method: "POST", authRequired: true)
-        
-        let body: [String: Any] = [
-            "user_id": userId,
-            "reason": reason
-        ]
-        
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-        
-        do {
-            let (data, response) = try await session.data(for: request)
-            let _: [String: String] = try handleResponse(data, response)
-        } catch let error as APIError {
-            throw error
-        } catch {
-            throw APIError.networkError(error)
-        }
-    }
-}

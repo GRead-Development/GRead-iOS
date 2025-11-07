@@ -4,18 +4,11 @@ import Combine
 
 @MainActor
 class BookDetailViewModel: ObservableObject {
-    @Published var book: Book
-    @Published var isInLibrary = false
+    @Published var book: Book?
     @Published var isLoading = false
-    @Published var showSuccess = false
-    @Published var showError = false
     @Published var errorMessage: String?
-    @Published var addToLibraryStatus: String?
     @Published var showingAddedAlert = false
-    
-    init(book: Book) {
-        self.book = book
-    }
+    @Published var addToLibraryStatus: String?
     
     func loadBook(id: Int) async {
         isLoading = true
@@ -31,14 +24,9 @@ class BookDetailViewModel: ObservableObject {
         isLoading = false
     }
     
-    func addToLibrary() async {
-        await addToLibrary(bookId: book.id, status: "reading")
-    }
-    
     func addToLibrary(bookId: Int, status: String) async {
         guard let _ = UserDefaults.standard.string(forKey: "auth_token") else {
             errorMessage = "Please log in to add books to your library"
-            showError = true
             return
         }
         
@@ -47,13 +35,10 @@ class BookDetailViewModel: ObservableObject {
         
         do {
             _ = try await APIService.shared.addBookToLibrary(bookId: bookId, status: status)
-            isInLibrary = true
             addToLibraryStatus = status
-            showSuccess = true
             showingAddedAlert = true
         } catch {
             errorMessage = error.localizedDescription
-            showError = true
             print("Error adding book to library: \(error)")
         }
         

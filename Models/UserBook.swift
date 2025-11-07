@@ -6,13 +6,17 @@ struct UserBook: Codable, Identifiable, Hashable {
     var currentPage: Int
     var status: String
     
+    // Manual Hashable implementation
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
+    // Manual Equatable implementation
     static func == (lhs: UserBook, rhs: UserBook) -> Bool {
         lhs.id == rhs.id
     }
+    
+    // MARK: - Computed Properties
     
     var progressPercentage: Int {
         guard let totalPages = book.pageCount, totalPages > 0 else {

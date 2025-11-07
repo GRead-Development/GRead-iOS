@@ -19,7 +19,7 @@ struct GroupRowView: View {
                 Image(systemName: "person.2.fill")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Text(group.status!.capitalized)
+                Text(group.status.capitalized)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
