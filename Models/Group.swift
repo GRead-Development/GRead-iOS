@@ -1,30 +1,18 @@
 import Foundation
 
-struct Group: Identifiable, Codable {
+struct Group: Codable, Identifiable, Hashable {
     let id: Int
     let name: String
-    let description: String
-    let memberCount: Int
-    let avatarUrl: String?
-    let status: String?
+    let description: String?
+    let status: String
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case description
-        case memberCount = "member_count"
-        case avatarUrl = "avatar_url"
-        case status
+    // Manual Hashable implementation
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try container.decode(Int.self, forKey: .id)
-        name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Unknown Group"
-        description = try container.decodeIfPresent(String.self, forKey: .description) ?? ""
-        memberCount = try container.decodeIfPresent(Int.self, forKey: .memberCount) ?? 0
-        avatarUrl = try container.decodeIfPresent(String.self, forKey: .avatarUrl)
-        status = try container.decodeIfPresent(String.self, forKey: .status)
+    // Manual Equatable implementation
+    static func == (lhs: Group, rhs: Group) -> Bool {
+        lhs.id == rhs.id
     }
 }

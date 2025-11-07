@@ -1,47 +1,51 @@
-import Foundation
-import SwiftUI
 import Combine
+import Foundation
 
 @MainActor
 class MyLibraryViewModel: ObservableObject {
     @Published var userBooks: [UserBook] = []
     @Published var isLoading = false
+    
+    // FIX: Added error properties to display feedback to the user
+    @Published var showError = false
     @Published var errorMessage: String?
     
     func loadUserBooks() async {
-        guard let _ = UserDefaults.standard.string(forKey: "auth_token") else {
-            errorMessage = "Please log in to view your library"
+        guard let token = UserDefaults.standard.string(forKey: "auth_token") else {
+            errorMessage = "You must be logged in to view your library."
+            showError = true
             return
         }
         
         isLoading = true
+        showError = false
         errorMessage = nil
+        defer { isLoading = false }
         
         do {
-            userBooks = try await APIService.shared.fetchUserBooks()
+            userBooks = try await APIService.shared.fetchUserBooks(token: token)
         } catch {
-            errorMessage = error.localizedDescription
+            // FIX: Set error properties on failure
             print("Error loading user books: \(error)")
+            errorMessage = "Failed to load library: \(error.localizedDescription)"
+            showError = true
         }
-        
-        isLoading = false
     }
     
-    func deleteBook(userBook: UserBook) async {
-        guard let _ = UserDefaults.standard.string(forKey: "auth_token") else {
-            errorMessage = "Please log in to manage your library"
+    func removeBook(_ userBook: UserBook) async {
+        guard let token = UserDefaults.standard.string(forKey: "auth_token") else {
+            errorMessage = "You must be logged in to remove books."
+            showError = true
             return
         }
         
-        errorMessage = nil
-        
         do {
-            try await APIService.shared.deleteUserBook(id: userBook.id)
+            try await APIService.shared.removeBookFromLibrary(bookId: userBook.book.id, token: token)
             // Remove from local array
             userBooks.removeAll { $0.id == userBook.id }
         } catch {
-            errorMessage = error.localizedDescription
-            print("Error deleting book: \(error)")
+            errorMessage = "Failed to remove book: \(error.localizedDescription)"
+            showError = true
         }
     }
 }

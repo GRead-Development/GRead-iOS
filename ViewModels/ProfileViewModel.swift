@@ -6,24 +6,20 @@ import Combine
 class ProfileViewModel: ObservableObject {
     @Published var userStats: UserStats?
     @Published var isLoading = false
-    @Published var errorMessage: String?
     
     func loadUserStats() async {
-        guard let _ = UserDefaults.standard.string(forKey: "auth_token") else {
-            errorMessage = "Please log in to view your stats"
+        guard let token = UserDefaults.standard.string(forKey: "auth_token"),
+              let userId = UserDefaults.standard.object(forKey: "user_id") as? Int else {
             return
         }
         
         isLoading = true
-        errorMessage = nil
+        defer { isLoading = false }
         
         do {
-            userStats = try await APIService.shared.fetchUserStats()
+            userStats = try await APIService.shared.fetchUserStats(userId: userId, token: token)
         } catch {
-            errorMessage = error.localizedDescription
-            print("Error loading user stats: \(error)")
+            print("Error loading stats: \(error)")
         }
-        
-        isLoading = false
     }
 }
