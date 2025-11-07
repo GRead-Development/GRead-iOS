@@ -79,10 +79,7 @@
 		18EDBD162EB950EA00B679DA /* Exceptions for "Models" folder in "GRead" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Activity.swift,
 				Book.swift,
-				Group.swift,
-				Leaderboard.swift,
 				UserBook.swift,
 				UserStats.swift,
 			);
@@ -100,11 +97,8 @@
 		18EDBD182EB950EA00B679DA /* Exceptions for "ViewModels" folder in "GRead" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ActivityFeedViewModel.swift,
 				BookDetailViewModel.swift,
 				BookDirectoryViewModel.swift,
-				GroupsViewModel.swift,
-				LeaderboardViewModel.swift,
 				MyBookDetailViewModel.swift,
 				MyLibraryViewModel.swift,
 				ProfileViewModel.swift,
@@ -115,30 +109,15 @@
 		18EDBD192EB950EA00B679DA /* Exceptions for "Views" folder in "GRead" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Activity/ActivityFeedView.swift,
-				Activity/ActivityRowView.swift,
-				Activity/GroupRowView.swift,
-				Activity/GroupsView.swift,
 				Auth/LoginView.swift,
 				Books/BookDetailView.swift,
 				Books/BookDirectoryView.swift,
 				Books/BookRowView.swift,
-				Books/ReportBookView.swift,
 				ContentView.swift,
 				Library/MyBookDetailView.swift,
 				Library/MyBookRowView.swift,
 				Library/MyLibraryView.swift,
 				MainTabView.swift,
-				More/AboutView.swift,
-				More/BooksLeaderboardView.swift,
-				More/ContactUsView.swift,
-				More/MoreMenuView.swift,
-				More/PointsLeaderboardView.swift,
-				More/PrivacyPolicyView.swift,
-				More/ReportContentView.swift,
-				More/SiteStatsView.swift,
-				More/StatItemView.swift,
-				More/TermsOfServiceView.swift,
 				Profile/ProfileView.swift,
 				Profile/StatRowView.swift,
 				Search/SearchView.swift,
