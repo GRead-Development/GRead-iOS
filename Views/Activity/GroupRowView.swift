@@ -8,8 +8,8 @@ struct GroupRowView: View {
             Text(group.name)
                 .font(.headline)
             
-            if let description = group.description {
-                Text(description.stripHTML())
+            if !group.description.isEmpty {
+                Text(group.description.stripHTML())
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(2)
@@ -19,12 +19,13 @@ struct GroupRowView: View {
                 Image(systemName: "person.2.fill")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Text(group.status!.capitalized)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if let status = group.status {
+                    Text(status.capitalized)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
             }
         }
         .padding(.vertical, 4)
     }
 }
-

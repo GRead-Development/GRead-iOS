@@ -47,14 +47,14 @@ struct BooksLeaderboardView: View {
     
     private var leaderboardList: some View {
         List {
-            ForEach(Array(viewModel.entries.enumerated()), id: \.element.id) { index, entry in
-                leaderboardRow(index: index, entry: entry)
+            ForEach(0..<viewModel.entries.count, id: \.self) { index in
+                leaderboardRow(index: index, entry: viewModel.entries[index])
             }
         }
         .listStyle(.plain)
     }
     
-    private func leaderboardRow(index: Int, entry: LeaderboardEntry) -> some View {
+    private func leaderboardRow(index: Int, entry: LeaderboardDisplayEntry) -> some View {
         HStack {
             rankBadge(rank: index + 1)
             

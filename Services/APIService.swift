@@ -153,7 +153,7 @@ class APIService {
     // MARK: - User Books (Library)
     
     func fetchUserBooks() async throws -> [UserBook] {
-        let url = try createURL(endpoint: "/wp-json/gread/v1/user-books")
+        let url = try createURL(endpoint: "/wp-json/gread/v1/library")
         let request = createRequest(url: url, authRequired: true)
         
         do {
@@ -167,7 +167,7 @@ class APIService {
     }
     
     func addBookToLibrary(bookId: Int, status: String) async throws -> UserBook {
-        let url = try createURL(endpoint: "/wp-json/gread/v1/user-books")
+        let url = try createURL(endpoint: "/wp-json/gread/v1/library")
         var request = createRequest(url: url, method: "POST", authRequired: true)
         
         let body: [String: Any] = [
@@ -188,7 +188,7 @@ class APIService {
     }
     
     func updateUserBook(id: Int, status: String?, currentPage: Int?) async throws {
-        let url = try createURL(endpoint: "/wp-json/gread/v1/user-books/\(id)")
+        let url = try createURL(endpoint: "/wp-json/gread/v1/library/\(id)")
         var request = createRequest(url: url, method: "PUT", authRequired: true)
         
         var body: [String: Any] = [:]
@@ -212,7 +212,7 @@ class APIService {
     }
     
     func deleteUserBook(id: Int) async throws {
-        let url = try createURL(endpoint: "/wp-json/gread/v1/user-books/\(id)")
+        let url = try createURL(endpoint: "/wp-json/gread/v1/library/\(id)")
         var request = createRequest(url: url, method: "DELETE", authRequired: true)
         
         do {
